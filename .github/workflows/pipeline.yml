@@ -12,7 +12,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      # Checkout The Repo
+      # Checkout of repo
       - uses: actions/checkout@v3
 
       # Install Node
@@ -21,11 +21,11 @@ jobs:
         with:
           node-version: "18"
 
-      # Install npm Dependencies
+      # Install npm dependencies
       - name: Install dependencies
         run: npm clean-install
 
-      # Run our Linter
+      # Running linter
       - name: Run linter
         run: npm run lint
 
