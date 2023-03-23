@@ -8,75 +8,74 @@ on:
     branches:
       - main
 
-# Why wont this run
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    #Checkout The Repo
-    - uses: actions/checkout@v3
+      # Checkout The Repo
+      - uses: actions/checkout@v3
 
-    #Install Node
-    - name: Use Node.js 18.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: "18"
+      # Install Node
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
 
-      #Install npm Dependencies
-    - name: Install dependencies
-      run: npm clean-install
+      # Install npm Dependencies
+      - name: Install dependencies
+        run: npm clean-install
 
-      #Run our Linter
-    - name: Run linter
-      run: npm run lint
+      # Run our Linter
+      - name: Run linter
+        run: npm run lint
 
   lint2:
     needs: lint
     runs-on: ubuntu-latest
     steps:
-    #Checkout The Repo
-    - uses: actions/checkout@v3
+      # Checkout The Repo
+      - uses: actions/checkout@v3
 
-    #Install Node
-    - name: Use Node.js 18.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: "18"
+      # Install Node
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
 
-      #Install npm Dependencies
-    - name: Install dependencies
-      run: npm clean-install
+      # Install npm Dependencies
+      - name: Install dependencies
+        run: npm clean-install
 
-      #Run our Linter
-    - name: Run linter
-      run: npm run lint
+      # Run our Linter
+      - name: Run linter
+        run: npm run lint
 
   unit-tests:
     needs:
-    - lint
-    - lint2
+      - lint
+      - lint2
     runs-on: ubuntu-latest
     steps:
-    # Checkout The Repo
-    - uses: actions/checkout@v3
+      # Checkout The Repo
+      - uses: actions/checkout@v3
 
-    #install Node
-    - name: Use Node.js 18.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: "18"
+      # Install Node
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
 
-    # Install npm Dependecies
-    - name: Install dependencies
-      run: npm clean-install
+      # Install npm Dependencies
+      - name: Install dependencies
+        run: npm clean-install
 
-    #Run Unit Tests
-    - name: Run unit tests
-      run: npm run test-unit
+      # Run Unit Tests
+      - name: Run unit tests
+        run: npm run test-unit
 
-    #Upload regarless of a Success for Fail
-    - if: success() || failure()
-      uses: actions/upload-artifact@v3
-      with:
-        name: unit-test-${{ github.sha }}
-        path: reports/report.xml
+      # Upload regardless of a Success or Fail
+      - if: success() || failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: unit-test-${{ github.sha }}
+          path: reports/report.xml
